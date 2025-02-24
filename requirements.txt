@@ -1,0 +1,6 @@
+fastapi
+pandas
+uvicorn
+azure-cognitiveservices-vision-computervision
+python-multipart
+pillow 

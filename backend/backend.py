@@ -11,6 +11,8 @@ from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 from typing import List
 import shutil
+from datetime import datetime 
+from data_analysis_agent import DataAnalysisAgent
 
 from image_analysis import analyze_image
 
@@ -32,6 +34,8 @@ UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
 # Serve static files (uploaded images)
 app.mount("/uploads", StaticFiles(directory=UPLOAD_FOLDER), name="uploads")
 
+analysis_agent = DataAnalysisAgent()
+
 @app.post("/upload-folder/")
 def upload_folder(folder_name: str = Form(...), folder: List[UploadFile] = File(...)):
     """
@@ -39,15 +43,18 @@ def upload_folder(folder_name: str = Form(...), folder: List[UploadFile] = File(
     """
     try:
         folder_path = UPLOAD_FOLDER
-
+        print(folder)
         for file in folder:
             file_path = folder_path / file.filename
             print("file_path:", file_path)
             file_path.parent.mkdir(parents=True, exist_ok=True)
+            # real_format = imghdr.what(file_path)
+            # print(f"Detected format: {real_format}")
 
             with file_path.open("wb") as buffer:
                 shutil.copyfileobj(file.file, buffer)
-                analyze_image(file_path)
+        # run data analysis agent 
+        analysis_agent.run_agent(folder_path, folder, datetime.now())
         return {
             "message": "Folder uploaded successfully",
             "folder_url": f"http://localhost:8000/uploads/{folder_name}"

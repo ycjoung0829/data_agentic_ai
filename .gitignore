@@ -1,2 +1,4 @@
 # ignore npm 
 node_modules/
+venv/
+api_keys.txt
