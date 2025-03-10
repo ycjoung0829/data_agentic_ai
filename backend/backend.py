@@ -58,8 +58,7 @@ def upload_folder(folder_name: str = Form(...), folder: List[UploadFile] = File(
         # run data analysis agent 
         timestamp = datetime.now()
         analysis_agent.run_agent(folder_path, folder, datetime.now())
-        categories = schema_agent.extract_categories()
-        print("categories:", categories)
+        schema_agent.run_agent()
         time_after = datetime.now()
         print("Time taken to run agent: ", time_after - timestamp)
         return {

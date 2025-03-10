@@ -1,8 +1,8 @@
-,image_name,description,url,uploaded_date
-0,test_images/amazon.jpg,"The image shows the Amazon logo, which consists of the word ""amazon"" in white capital letters with a yellow smiley arrow beneath it.",uploaded_images/test_images/amazon.jpg,2025-03-10 13:35:00.842850
-1,test_images/apple.jpg,A red apple with a stem is isolated on a white background.,uploaded_images/test_images/apple.jpg,2025-03-10 13:35:00.842850
-2,test_images/google.webp,"The image shows the Google logo with a smiling magnifying glass replacing the letter ""O"".",uploaded_images/test_images/google.webp,2025-03-10 13:35:00.842850
-3,test_images/meta.jpg,"The image displays the logo for Meta, featuring a blue infinity symbol on the left and the word ""Meta"" in black to the right.",uploaded_images/test_images/meta.jpg,2025-03-10 13:35:00.842850
-4,test_images/nike.png,"The image displays the Nike logo, which features the word ""NIKE"" in bold, black capital letters with a swoosh design underneath.",uploaded_images/test_images/nike.png,2025-03-10 13:35:00.842850
-5,test_images/orange.jpg,"A single, ripe orange with a green leaf attached to its stem is shown against a white background.",uploaded_images/test_images/orange.jpg,2025-03-10 13:35:00.842850
-6,test_images/pineapple.jpeg,A whole pineapple with its green top is placed on a white surface.,uploaded_images/test_images/pineapple.jpeg,2025-03-10 13:35:00.842850
+Unnamed: 0,image_name,description,url,uploaded_date,category
+0,test_images/nike.png,"The image displays the Nike logo, which features the word ""NIKE"" in bold, black capital letters with a swoosh design underneath.",uploaded_images/test_images/nike.png,2025-03-10 16:51:20.827446,Logos
+1,test_images/amazon.jpg,"The image shows the Amazon logo, which consists of the word ""amazon"" in white capital letters with a yellow smiley arrow beneath it.",uploaded_images/test_images/amazon.jpg,2025-03-10 16:51:20.827446,Logos
+2,test_images/meta.jpg,"The image displays the logo for Meta, featuring a blue infinity symbol on the left and the word ""Meta"" in black to the right.",uploaded_images/test_images/meta.jpg,2025-03-10 16:51:20.827446,Logos
+3,test_images/apple.jpg,A red apple with a stem is isolated on a white background.,uploaded_images/test_images/apple.jpg,2025-03-10 16:51:20.827446,Fruits
+4,test_images/orange.jpg,"A single, ripe orange with a green leaf attached to its stem is shown against a white background.",uploaded_images/test_images/orange.jpg,2025-03-10 16:51:20.827446,Fruits
+5,test_images/pineapple.jpeg,A whole pineapple with its green top is placed on a white surface.,uploaded_images/test_images/pineapple.jpeg,2025-03-10 16:51:20.827446,Fruits
+6,test_images/google.webp,"The image shows the Google logo with a smiling magnifying glass replacing the letter ""O"".",uploaded_images/test_images/google.webp,2025-03-10 16:51:20.827446,Logos

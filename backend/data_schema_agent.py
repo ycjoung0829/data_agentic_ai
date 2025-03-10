@@ -34,3 +34,10 @@ class DataSchemaAgent:
         )
         print("content:",response.choices[0].message.content[len("   python"):-len("```")].strip())
         return json.loads(response.choices[0].message.content[len("   python"):-len("```")].strip())
+    
+    def run_agent(self):
+        extracted_data = self.extract_categories()
+        for category, images in extracted_data.items():
+            for image in images:
+                self.dataset.loc[self.dataset["image_name"] == image, "category"] = category
+        self.dataset.to_csv("uploaded_images/result.csv", index=False)
