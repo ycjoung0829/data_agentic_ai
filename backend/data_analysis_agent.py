@@ -13,19 +13,19 @@ class DataAnalysisAgent:
         key = os.getenv('AZURE_SUBSCRIPTION_KEY')
         endpoint = os.getenv('AZURE_ENDPOINT') 
         self.computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(key))
-        self.openai_api_key = os.getenv("OPENAI_API_KEY")
-        self.openai_client = OpenAI(api_key=self.openai_api_key)
+        self.openai_api_key = os.getenv("DASHSCOPE_API_KEY")#os.getenv("OPENAI_API_KEY")
+        self.openai_client = OpenAI(api_key=self.openai_api_key, base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1")
+        self.openai_model = "qwen-vl-plus"#"gpt-4o-mini"
         # create a pandas dataframe
         self.dataset = dict() # create a dictionary to store data
         self.dataset['image_name'] = []
         self.dataset['description'] = []
-        # self.dataset['topic'] = []
         self.dataset['url'] = []
         self.dataset['uploaded_date'] = []
         self.result = None 
     
         
-    def run_analysis(self, file):
+    def run_analysis_azure(self, file):
         """
         _summary_: This function runs the data analysis agent on the image and returns the description of the image.
         _params_: image: str
@@ -34,11 +34,10 @@ class DataAnalysisAgent:
         with open(file, "rb") as f:
         # add description
             description_result = self.computervision_client.describe_image_in_stream(f)
-            # tags_result = self.computervision_client.tag_image_in_stream(f)
-            return description_result.captions[0].text #, [tag.name for tag in tags_result.tags]
+            return description_result.captions[0].text
         return ""
     
-    def run_analysis_openai(self, file):
+    def run_analysis(self, file):
         """
         _summary_: This function runs the data analysis agent on the image and returns the description of the image.
         _params_: image: str
@@ -47,7 +46,7 @@ class DataAnalysisAgent:
         with open(file, "rb") as f:
             base64_image = base64.b64encode(f.read()).decode("utf-8")
             response = self.openai_client.chat.completions.create(
-                model="gpt-4o-mini",
+                model=self.openai_model,
                 messages=[
                     {
                         "role": "user",
@@ -75,7 +74,7 @@ class DataAnalysisAgent:
             print("file_path in agent:", file_path)
             file_path.parent.mkdir(parents=True, exist_ok=True)
 
-            text = self.run_analysis_openai(file_path)
+            text = self.run_analysis(file_path)
             self.dataset['image_name'].append(file.filename)
             self.dataset['description'].append(text)
             self.dataset['url'].append(file_path)
