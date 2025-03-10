@@ -1,8 +1,6 @@
 from image_analysis import analyze_image
 import pandas as pd 
 from azure.cognitiveservices.vision.computervision import ComputerVisionClient
-from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
-from azure.cognitiveservices.vision.computervision.models import VisualFeatureTypes, Details
 from msrest.authentication import CognitiveServicesCredentials
 import os 
 
@@ -32,8 +30,9 @@ class DataAnalysisAgent:
         with open(file, "rb") as f:
         # add description
             description_result = self.computervision_client.describe_image_in_stream(f)
-            return description_result.captions[0].text
-        return "" 
+            # tags_result = self.computervision_client.tag_image_in_stream(f)
+            return description_result.captions[0].text #, [tag.name for tag in tags_result.tags]
+        return ""
     
     def run_agent(self, folder_path, folder, timestamp):
         # Do some data analysis
@@ -46,6 +45,7 @@ class DataAnalysisAgent:
             self.dataset['image_name'].append(file.filename)
             self.dataset['description'].append(text)
             self.dataset['url'].append(file_path)
+            # self.dataset['topic'].append(tags)
             self.dataset['uploaded_date'].append(timestamp)
         self.result = pd.DataFrame(self.dataset)
         result_csv = folder_path / "result.csv"

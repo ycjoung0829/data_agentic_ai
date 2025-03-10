@@ -2,3 +2,4 @@
 node_modules/
 venv/
 api_keys.txt
+*.pyc

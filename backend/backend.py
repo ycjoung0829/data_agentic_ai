@@ -54,7 +54,10 @@ def upload_folder(folder_name: str = Form(...), folder: List[UploadFile] = File(
             with file_path.open("wb") as buffer:
                 shutil.copyfileobj(file.file, buffer)
         # run data analysis agent 
+        timestamp = datetime.now()
         analysis_agent.run_agent(folder_path, folder, datetime.now())
+        time_after = datetime.now()
+        print("Time taken to run agent: ", time_after - timestamp)
         return {
             "message": "Folder uploaded successfully",
             "folder_url": f"http://localhost:8000/uploads/{folder_name}"

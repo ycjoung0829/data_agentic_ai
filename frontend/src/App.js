@@ -17,11 +17,11 @@ export default function FolderUpload() {
         }
 
         const formData = new FormData();
-        formData.append("folder_name", files[0].webkitRelativePath.split('/')[0]);
-        
-        for (const file of files) {
+        formData.append("folder_name", files[0].webkitRelativePath.split("/")[0]);
+
+        Array.from(files).forEach((file) => {
             formData.append("folder", file);
-        }
+        });
 
         try {
             const res = await fetch("http://localhost:8000/upload-folder/", {
@@ -29,30 +29,45 @@ export default function FolderUpload() {
                 body: formData,
             });
             const data = await res.json();
-            console.log(data);
             setResponse(data);
-            setStatus("Folder upload completed");
+            setStatus("✅ Folder upload completed");
         } catch (error) {
             console.error("Upload failed", error);
-            setStatus("Error uploading folder");
+            setStatus("❌ Error uploading folder");
         }
     };
 
     return (
-        <div className="p-4 space-y-4">
-            <h1 className="text-xl font-bold">Upload a Folder</h1>
-            <h3>{status}</h3>
-            <input type="file" webkitdirectory="" directory="" multiple onChange={handleFolderChange} className="border p-2" />
-            <Button 
-                onClick={handleUpload} 
-                className="bg-blue-500 text-white px-4 py-2 rounded"
-            >
-                Upload Folder
-            </Button>
+        <div className="p-6 space-y-6 max-w-lg mx-auto bg-white shadow-lg rounded-lg">
+            <h1 className="text-2xl font-bold text-center text-gray-700">📂 Upload a Folder</h1>
+            <p className="text-center text-gray-500">Select a folder and upload it to the server.</p>
+            <h3 className={`text-center font-semibold ${status.includes('Error') ? 'text-red-500' : 'text-green-500'}`}>{status}</h3>
+            <div className="flex justify-center">
+                <input 
+                    type="file" 
+                    webkitdirectory="" 
+                    directory="" 
+                    multiple 
+                    onChange={handleFolderChange} 
+                    className="border p-2 rounded-md cursor-pointer file:hidden"
+                />
+            </div>
+            <div className="flex justify-center">
+                <Button 
+                    onClick={handleUpload} 
+                    variant="contained" 
+                    color="primary"
+                    className="w-full py-2"
+                >
+                    🚀 Upload Folder
+                </Button>
+            </div>
             {response && (
-                <div className="mt-4 p-2 border rounded">
-                    <h2 className="font-bold">Response:</h2>
-                    <pre className="bg-gray-100 p-2">{JSON.stringify(response, null, 2)}</pre>
+                <div className="mt-6 p-4 border rounded bg-gray-100">
+                    <h2 className="font-bold text-gray-700">📝 Response:</h2>
+                    <pre className="bg-white p-2 overflow-auto rounded-md border border-gray-300">
+                        {JSON.stringify(response, null, 2)}
+                    </pre>
                 </div>
             )}
         </div>
