@@ -4,3 +4,4 @@ uvicorn
 azure-cognitiveservices-vision-computervision
 python-multipart
 pillow 
+openai 

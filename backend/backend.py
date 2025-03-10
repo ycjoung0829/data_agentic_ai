@@ -13,6 +13,7 @@ from typing import List
 import shutil
 from datetime import datetime 
 from data_analysis_agent import DataAnalysisAgent
+from data_schema_agent import DataSchemaAgent
 
 from image_analysis import analyze_image
 
@@ -35,6 +36,7 @@ UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=UPLOAD_FOLDER), name="uploads")
 
 analysis_agent = DataAnalysisAgent()
+schema_agent = DataSchemaAgent()
 
 @app.post("/upload-folder/")
 def upload_folder(folder_name: str = Form(...), folder: List[UploadFile] = File(...)):
@@ -56,6 +58,8 @@ def upload_folder(folder_name: str = Form(...), folder: List[UploadFile] = File(
         # run data analysis agent 
         timestamp = datetime.now()
         analysis_agent.run_agent(folder_path, folder, datetime.now())
+        categories = schema_agent.extract_categories()
+        print("categories:", categories)
         time_after = datetime.now()
         print("Time taken to run agent: ", time_after - timestamp)
         return {
